@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>HP</title>
+        <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
+    </head>
+    <body>
+        <nav>
+            <a href="filtre_hp.html">Filtre</a>
+            <a href="inscription.html">Inscription</a>
+            <a href="connexion.html">Connexion</a>
+        </nav>
+
+        <header>
+            <h1>Tous les personnages</h1>
+        </header>
+
+        <div id="characters__index"></div>
+
+        <div id="b">
+            <input type="button" value="Oui" />
+            <button onclick="PopUp()">Test</button>
+        </div>
+
+        <div id="popUp">
+            <h4>Ouiiiiiiii</h4>
+            <p>ouiiiiiii</p>
+            <p onclick="fermer()">Close</p>
+        </div>
+
+        <script>
+            //La fonction fetch permet de récupérer tous les personnages présents dans l'api donner grâce au lien et de le rendre en .json
+            function fetchPerso() {
+                return fetch("https://hp-api.lainocs.fr/characters").then(
+                    (response) => response.json()
+                );
+            }
+
+            //async et await permet d'attendre la réponse de la fonction fetch
+            //Fonction qui affiche tous les personnages présent dans la "liste" renvoyer par la fonction fetch
+            async function displayCharaters() {
+                const data = await fetchPerso();
+                data.forEach((characters) => {
+                    document.getElementById("characters__index").innerHTML += `
+                <a href="perso_hp.html?slug=${characters.slug}">
+                    <div class="carte_characters">
+                        <img src="${characters.image}" alt="${characters.name}" class="img_perso_index">
+                        <h2 id="carte_nom">${characters.name}</h2>
+                    </div>
+                </a>
+                `;
+                });
+            }
+
+            displayCharaters();
+
+            function PopUp() {
+                document.getElementById("popUp").style.display = "flex";
+            }
+
+            function fermer() {
+                document.getElementById("popUp").style.display = "none";
+            }
+        </script>
+    </body>
+</html>

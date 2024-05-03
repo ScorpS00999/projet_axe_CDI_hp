@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>HP</title>
+        <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
+    </head>
+    <body>
+        <nav>
+            <a href="index.html">Menu</a>
+            <a href="filtre_hp.html">Filtre</a>
+            <a href="inscription.html">Inscription</a>
+            <a href="connexion.html">Connexion</a>
+        </nav>
+
+        <div class="login-form">
+            <h2>Connexion</h2>
+            <form
+                action="utilisateur.html"
+                method="POST"
+                id="formulaire"
+                name="connexion"
+            >
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required />
+
+                <input type="submit" value="Se connecter" />
+            </form>
+        </div>
+
+        <script>
+            const formulaire = document.getElementById("formulaire");
+
+            formulaire.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                const response = await fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                const token = data.token;
+
+                localStorage.setItem("token", token);
+                location.href = "utilisateur.php";
+            });
+
+            const getMyProfil = async () => {
+                const token = localStorage.getItem("token");
+
+                const response = await fetch(
+                    "http://localhost:3000/getMyProfil",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                const data = await response.json();
+
+                console.log(data);
+            };
+
+            getMyProfil();
+        </script>
+    </body>
+</html>

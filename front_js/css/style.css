@@ -1,0 +1,228 @@
+/*Style général*/
+
+* {
+    margin: 0;
+}
+
+body {
+    max-width: 100vw;
+    background-color: rgb(252, 243, 231);
+    /* height: 100vh; !! ne jamais gerer la hauteur seulment la largeur*/
+
+    /*background-image: url(../img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 100vw;*/
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+}
+
+/*Style pour la page index*/
+
+#characters__index {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+#characters__index a {
+    display: flex;
+    justify-content: center;
+}
+
+.img_perso_index {
+    height: 60vh;
+}
+
+/*Style de la page perso_hp*/
+
+#perso {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#img_perso {
+    height: 97.7vh;
+    max-width: 45vw;
+    object-fit: cover;
+    margin-left: 3%;
+}
+
+#description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 10%;
+    padding: 30px;
+}
+
+/*Style de la page filtre_hp*/
+
+#characters_maison {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+#characters_maison a {
+    margin: 3%;
+    display: flex;
+    justify-content: center;
+}
+
+#maison_select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 2%;
+}
+
+/*Style des cartes*/
+
+.carte_characters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    height: 600px;
+    width: 400px;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 10%;
+    padding: 4%;
+    padding-top: 4%;
+}
+
+.carte_characters:hover {
+    outline: solid 2px red;
+    transform: scale(1.06);
+}
+
+.carte_characters img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: cover;
+    min-width: 90%;
+    min-height: 90%;
+}
+
+#carte_nom {
+    padding-top: 30px;
+}
+
+/*Style du bouton retour*/
+
+#bouton_retour {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background-color: white;
+    padding-right: 2vw;
+}
+
+/*Style de la page inscription et connexion*/
+
+.login-form,
+.container {
+    display: flex;
+    min-height: 80vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#formulaire,
+#registrationForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Responsive*/
+@media all and (max-width: 1024px) {
+    /*Responsive page perso_hp*/
+    #perso {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    #img_perso {
+        min-width: 90%;
+        min-height: 90%;
+
+        max-width: 45vw;
+        object-fit: cover;
+        margin-left: 3%;
+        height: 100%;
+    }
+
+    #description {
+        margin: 0%;
+    }
+}
+
+@media all and (max-width: 480px) {
+    /*Responsive page index*/
+    #characters__index {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /*Responsive page pers_hp*/
+    #perso {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    #img_perso {
+        min-width: 90%;
+        min-height: 90%;
+    }
+
+    #description {
+        margin: 0%;
+    }
+}
+
+#b {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+button {
+    border-radius: 6.5px;
+    height: 5vh;
+    width: 8vw;
+}
+
+#popUp {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    top: 30vh;
+    background-color: chartreuse;
+    left: 50%;
+}

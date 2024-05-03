@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>Personnage</title>
+        <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
+    </head>
+    <body>
+        <div id="perso"></div>
+
+        <a href="index.html" id="bouton_retour">Retour</a>
+
+        <script>
+            function fetchPerso() {
+                //Quand on click sur un personnage ça nous envoie sur cette page avec le slug (sorte de clé pour le différencier) du perso qu'on à choisi et la ligne du dessous permet de récuperer lee lien de la page ou on est et donc récuperer le slug pour afficher les informations en fonction du personnage
+                let url = window.location.search;
+                let slug = new URLSearchParams(url).get("slug");
+                return fetch(
+                    "https://hp-api.lainocs.fr/characters/" + slug
+                ).then((response) => response.json());
+            }
+
+            function fetchMaison(house) {
+                return fetch("http://192.168.131.5:3000/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+
+                    body: JSON.stringify({ house }),
+                });
+            }
+
+            async function displayPerso() {
+                const data = await fetchPerso();
+
+                let house;
+                if (data.house == "") {
+                    house = "Ce personnage n'a pas de maison.";
+                } else {
+                    house = data.house;
+                }
+
+                const dataLed = await fetchMaison(house);
+
+                document.title = data.name;
+
+                document.getElementById("perso").innerHTML = `
+                <img src="${data.image}" alt="${data.name}" id="img_perso">
+                <div id="description">
+                    <h1>${data.name}</h1>
+                    <br></br>
+                    <h3>Maison : ${house}</h3>
+                    <h3>Acteur/trice : ${data.actor}</h3>
+                    <h3>Patronus : ${data.patronus}</h3>
+                    <h3>Statue : ${data.role}</h3>
+                    <h3>Statue de sang : ${data.blood}</h3>
+                </div>
+                `;
+            }
+
+            displayPerso();
+        </script>
+    </body>
+</html>

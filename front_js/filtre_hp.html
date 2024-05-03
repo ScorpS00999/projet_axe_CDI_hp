@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>Maisons</title>
+        <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
+    </head>
+    <body>
+        <nav>
+            <a href="index.html">Menu</a>
+        </nav>
+
+        <!--Liste déroulante pour le choix des maisons-->
+        <div id="maison_select">
+            <label for="house-select">Choisir une maison:</label>
+
+            <select name="house" id="house-select">
+                <option value="all">--Choisissez une option--</option>
+                <option value="Gryffindor">Gryffindor</option>
+                <option value="Ravenclaw">Ravenclaw</option>
+                <option value="Slytherin">Slytherin</option>
+                <option value="Hufflepuff">Hufflepuff</option>
+                <option value="">Sans maison</option>
+            </select>
+
+            <input type="submit" value="Valider" id="valider" />
+            <button id="reset">Reset</button>
+        </div>
+
+        <!--Div où vont aller les cartes des maisons choisis-->
+        <div id="characters_maison"></div>
+
+        <script>
+            let valider = document.querySelector("#valider");
+            let reset = document.getElementById("reset");
+
+            function fetchPerso() {
+                return fetch("https://hp-api.lainocs.fr/characters").then(
+                    (response) => response.json()
+                );
+            }
+
+            //Afficher tous les personnages
+            async function displayCharaters() {
+                //D'abord remettre la div à "zéro", effacer ce qu'elle contient
+                document.getElementById("characters_maison").innerHTML = "";
+
+                const data = await fetchPerso();
+                //Créer une div (avec un lien) pour chaque personnage de la liste
+                data.forEach((characters) => {
+                    document.getElementById("characters_maison").innerHTML += `
+                <a href="perso_hp.html?slug=${characters.slug}">
+                    <div class="carte_characters">
+                        <img src="${characters.image}" alt="${characters.name}" class="img_perso_menu">
+                        <h2 id="carte_nom">${characters.name}</h2>
+                    </div>
+                </a>
+                `;
+                });
+            }
+
+            //Afficher les personnages en fonction de leurs maisons
+            async function displayCharatersHouse() {
+                let maison = document.getElementById("house-select").value;
+
+                //Mettre la div à "zéro"
+                document.getElementById("characters_maison").innerHTML = "";
+                let carte = document.getElementsByClassName("carte_characters");
+
+                const data = await fetchPerso();
+                data.forEach((characters) => {
+                    //Vérifier la maison de chaque personnages
+                    if (characters.house == maison) {
+                        //Afficher tous les personnages avec la maisons correspondante
+                        document.getElementById(
+                            "characters_maison"
+                        ).innerHTML += `
+                    <a href="perso_hp.html?slug=${characters.slug}">
+                        <div class="carte_characters">
+                            <img src="${characters.image}" alt="${characters.name}" class="img_perso_menu">
+                            <h2 id="carte_nom">${characters.name}</h2>
+                        </div>
+                    </a>
+                    `;
+                    }
+                });
+
+                if (maison == "all") {
+                    displayCharaters();
+                }
+            }
+
+            displayCharaters();
+            reset.addEventListener("click", displayCharaters);
+            valider.addEventListener("click", displayCharatersHouse);
+        </script>
+    </body>
+</html>

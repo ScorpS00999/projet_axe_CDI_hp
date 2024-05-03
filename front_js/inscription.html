@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>HP</title>
+        <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
+    </head>
+    <body>
+        <nav>
+            <a href="index.html">Menu</a>
+            <a href="filtre_hp.html">Filtre</a>
+            <a href="inscription.html">Inscription</a>
+            <a href="connexion.html">Connexion</a>
+        </nav>
+
+        <div class="container">
+            <h2>Inscription</h2>
+            <form action="inscription.php" method="post" id="registrationForm">
+                <label for="username">Nom d'utilisateur:</label>
+                <input type="text" id="username" name="username" required />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required />
+
+                <input type="submit" value="S'inscrire" />
+            </form>
+        </div>
+
+        <script>
+            document
+                .getElementById("registrationForm")
+                .addEventListener("submit", async (event) => {
+                    event.preventDefault();
+
+                    var name = document.getElementById("username").value;
+                    var email = document.getElementById("email").value;
+                    var password = document.getElementById("password").value;
+
+                    var username = document.getElementById("username").value;
+                    //var formData = new FormData(this);
+
+                    var userData = {};
+
+                    // Transforme les données FormData en objet JavaScript
+                    //for (var pair of formData.entries()) {
+                    //    userData[pair[0]] = pair[1];
+                    //}
+
+                    // Stocke les informations dans un tableau
+                    //var userArray = [];
+                    //userArray.push(userData);
+
+                    // Affiche le tableau dans la console (juste pour démonstration)
+                    //console.log(userArray);
+
+                    //console.log(username, formData.entries);
+
+                    const response = await fetch(
+                        "http://localhost:3000/users",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ email, name, password }),
+                        }
+                    );
+
+                    const data = await response.json();
+                });
+
+            // Fonction pour valider l'adresse email
+            function isValidEmail(email) {
+                var re = /\S+@\S+\.\S+/;
+                return re.test(email);
+            }
+        </script>
+    </body>
+</html>

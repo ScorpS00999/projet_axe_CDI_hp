@@ -16,6 +16,11 @@
 
         <header>
             <h1>Tous les personnages</h1>
+
+            <div id="rechercheDynamique">
+                <input type="text" id="searchInput" placeholder="Search..." />
+                <ul id="searchResults"></ul>
+            </div>
         </header>
 
         <div id="characters__index"></div>
@@ -64,6 +69,51 @@
             function fermer() {
                 document.getElementById("popUp").style.display = "none";
             }
+
+            //------------------------------------------------------------------------------------------------------------------------
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const searchInput = document.getElementById("searchInput");
+                const searchResults = document.getElementById("searchResults");
+
+                searchInput.addEventListener("input", function () {
+                    const searchTerm = searchInput.value.trim().toLowerCase();
+
+                    if (searchTerm === "") {
+                        searchResults.innerHTML = ""; // Clear previous results
+                        return; // Exit early if search term is empty
+                    }
+
+                    // Fetch data from API
+                    fetch(
+                        `https://hp-api.lainocs.fr/characters?q=${searchTerm}`
+                    )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            searchResults.innerHTML = ""; // Clear previous results
+                            // Display matching results
+                            data.forEach((character) => {
+                                if (
+                                    character.name
+                                        .toLowerCase()
+                                        .includes(searchTerm)
+                                ) {
+                                    const li = document.createElement("li");
+                                    const a = document.createElement("a");
+                                    a.textContent = character.name; // Afficher uniquement le nom
+                                    a.href = `perso_hp.html?slug=${character.slug}`;
+                                    li.appendChild(a);
+                                    searchResults.appendChild(li);
+                                }
+                            });
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching data:", error);
+                        });
+                });
+            });
+
+            //----------------------------------------------------------------------------------------------------------------------------------------
         </script>
     </body>
 </html>

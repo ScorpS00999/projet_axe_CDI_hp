@@ -21,6 +21,7 @@ model User {
   name  String?               //le point d'interrogation c'est pour dire qu'il peut etre null
   password String
   posts Post[]
+  cartes Cartes[]
 }
 
 model Post {
@@ -30,4 +31,14 @@ model Post {
   published Boolean @default(false)
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
+}
+
+model Cartes {
+  id      Int      @id @default(autoincrement()) // Identifiant auto-incrémenté
+  nom     String   @db.VarChar(45) // Champ de texte "nom" avec une longueur maximale de 45 caractères
+  img     String   @db.VarChar(200) // Champ de texte "img" avec une longueur maximale de 45 caractères
+  maison  String?  @db.VarChar(45) // Champ de texte "maison" pouvant être null avec une longueur maximale de 45 caractères
+  isLike  Boolean  @default(false) // Champ booléen "isLike" avec une valeur par défaut de false
+  userId  Int      // Clé étrangère vers l'utilisateur
+  User    User     @relation(fields: [userId], references: [id]) // Relation avec la table User
 }

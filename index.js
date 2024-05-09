@@ -1,10 +1,10 @@
-const bodyParser = require("body-parser");
+import bodyParser from "body-parser";
 
-const ip = require("ip");
+import ip from "ip";
 
-const express = require("express");
-const routes = require("./routes/start");
-const cors = require("cors");
+import express from "express";
+import routes from "./routes/start.js";
+import cors from "cors";
 const app = express();
 const port = 3000;
 const idAdder = ip.address();

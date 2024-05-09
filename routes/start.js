@@ -1,7 +1,8 @@
-const express = require("express");
-const UsersController = require("../controllers/UsersController");
-const AuthentificationController = require("../controllers/AuthentificationController");
-const AuthMiddleware = require("../middlewares/auth");
+import express from "express";
+import UsersController from "../controllers/UsersController.js";
+import AuthentificationController from "../controllers/AuthentificationController.js";
+import AuthMiddleware from "../middlewares/auth.js";
+import CardsController from "../controllers/CardsController.js";
 
 const router = express.Router();
 
@@ -20,4 +21,8 @@ router.get(
     UsersController.getMyProfil
 );
 
-module.exports = router;
+router.get("/cards/:id", CardsController.index);
+router.post("/cards", CardsController.store);
+router.delete("/cards/:id", CardsController.destroy);
+
+export default router;

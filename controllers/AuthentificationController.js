@@ -1,6 +1,6 @@
-const prisma = require("../config/prisma");
-const { comparePassword } = require("../utils/bcrypt");
-const { generateToken } = require("../utils/jwt");
+import prisma from "../config/prisma.js";
+import { comparePassword } from "../utils/bcrypt.js";
+import { generateToken } from "../utils/jwt.js";
 
 class AuthentificationController {
     async login(req, res) {
@@ -33,4 +33,4 @@ class AuthentificationController {
     }
 }
 
-module.exports = new AuthentificationController();
+export default new AuthentificationController();

@@ -12,6 +12,7 @@
             <a href="filtre_hp.html">Filtre</a>
             <a href="inscription.html">Inscription</a>
             <a href="connexion.html">Connexion</a>
+            <a href="utilisateur.html">Profil</a>
         </nav>
 
         <header>
@@ -21,18 +22,21 @@
                 <input type="text" id="searchInput" placeholder="Search..." />
                 <ul id="searchResults"></ul>
             </div>
+
+            <button id="favoriteButton" class="favorite"></button>
         </header>
 
         <div id="characters__index"></div>
 
         <div id="b">
-            <input type="button" value="Oui" />
             <button onclick="PopUp()">Test</button>
         </div>
 
         <div id="popUp">
             <h4>Ouiiiiiiii</h4>
             <p>ouiiiiiii</p>
+            <label for="perso">Choisi une carte:</label>
+            <select name="perso" id="PersoPop"></select>
             <p onclick="fermer()">Close</p>
         </div>
 
@@ -50,12 +54,14 @@
                 const data = await fetchPerso();
                 data.forEach((characters) => {
                     document.getElementById("characters__index").innerHTML += `
-                <a href="perso_hp.html?slug=${characters.slug}">
+
                     <div class="carte_characters">
+                        <a href="perso_hp.html?slug=${characters.slug}">
                         <img src="${characters.image}" alt="${characters.name}" class="img_perso_index">
                         <h2 id="carte_nom">${characters.name}</h2>
+                    </a>
                     </div>
-                </a>
+
                 `;
                 });
             }
@@ -64,10 +70,21 @@
 
             function PopUp() {
                 document.getElementById("popUp").style.display = "flex";
+                PersoPopUp();
             }
 
             function fermer() {
                 document.getElementById("popUp").style.display = "none";
+            }
+
+            async function PersoPopUp() {
+                const data = await fetchPerso();
+
+                data.forEach((characters) => {
+                    document.getElementById("PersoPop").innerHTML += `
+                    <option value="${characters.slug}">${characters.name}</option>
+                `;
+                });
             }
 
             //------------------------------------------------------------------------------------------------------------------------
@@ -110,6 +127,17 @@
                         .catch((error) => {
                             console.error("Error fetching data:", error);
                         });
+                });
+            });
+
+            //----------------------------------------------------------------------------------------------------------------------------------------
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const favoriteButton =
+                    document.getElementById("favoriteButton");
+
+                favoriteButton.addEventListener("click", function () {
+                    favoriteButton.classList.toggle("clicked"); // Toggle la classe 'clicked'
                 });
             });
 

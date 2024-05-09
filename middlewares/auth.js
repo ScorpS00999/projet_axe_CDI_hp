@@ -1,5 +1,5 @@
-const prisma = require("../config/prisma");
-const jsonwebtoken = require("jsonwebtoken");
+import prisma from "../config/prisma.js";
+import jsonwebtoken from "jsonwebtoken";
 
 class AuthMiddleware {
     async authenticate(req, res, next) {
@@ -36,4 +36,4 @@ class AuthMiddleware {
     }
 }
 
-module.exports = new AuthMiddleware();
+export default new AuthMiddleware();

@@ -1,5 +1,5 @@
-const prisma = require("../config/prisma");
-const { hashPassword } = require("../utils/bcrypt");
+import prisma from "../config/prisma.js";
+import { hashPassword } from "../utils/bcrypt.js";
 
 class UsersController {
     async getMyProfil(req, res) {
@@ -87,4 +87,4 @@ class UsersController {
     }
 }
 
-module.exports = new UsersController();
+export default new UsersController();

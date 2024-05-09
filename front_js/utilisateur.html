@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>Personnage</title>
+        <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            integrity="..."
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <h2>Bonjour,</h2>
+        <p>
+            Dans le formulaire précédent, vous avez fourni les informations
+            suivantes :
+        </p>
+
+        <main class="info-container">
+            <div class="profile-container">
+                <h3>Profil de l'utilisateur</h3>
+
+                <i class="fas fa-heart" style="font-size: 30px; color: red"></i>
+
+                <form class="form-group">
+                    <div>
+                        <p type="text" id="name" name="name">ju</p>
+                    </div>
+                    <div>
+                        <p type="email" id="email" name="email">n</p>
+                    </div>
+                    <p id="ff"></p>
+                    <p id="house"></p>
+                </form>
+            </div>
+
+            <div id="carte_utilisateur"></div>
+        </main>
+
+        <a href="index.html" id="bouton_retour">Retour</a>
+
+        <div id="booster">
+            <button onclick="PopUp()">Test</button>
+        </div>
+
+        <div id="popUpBooster">
+            <div id="carteBooster"></div>
+            <p onclick="fermer()">Close</p>
+        </div>
+
+        <script>
+            function fetchPerso() {
+                return fetch("https://hp-api.lainocs.fr/characters").then(
+                    (response) => response.json()
+                );
+            }
+            function PopUp() {
+                document.getElementById("popUpBooster").style.display = "flex";
+                CartesBooster();
+            }
+
+            function fermer() {
+                document.getElementById("popUpBooster").style.display = "none";
+            }
+
+            async function CartesBooster() {
+                const token = localStorage.getItem("token");
+                const response_user = await fetch(
+                    "http://localhost:3000/getMyProfil",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                const data_user = await response_user.json();
+
+                let number = [
+                    Math.floor(Math.random() * 10 + 1),
+                    Math.floor(Math.random() * 10 + 1),
+                    Math.floor(Math.random() * 10 + 1),
+                    Math.floor(Math.random() * 10 + 1),
+                    Math.floor(Math.random() * 10 + 1),
+                ];
+
+                const response = await fetch(
+                    "https://hp-api.lainocs.fr/characters"
+                );
+                const data = await response.json();
+
+                for (let i = 0; i < 5; i++) {
+                    const selectedPerso = data.find(
+                        (perso) => perso.id === number[i]
+                    );
+                    if (selectedPerso) {
+                        document.getElementById("carteBooster").innerHTML += `
+                <div class="carte_characters">
+                    <img src="${selectedPerso.image}" alt="${selectedPerso.name}" class="img_perso_menu">
+                    <h2 id="carte_nom">${selectedPerso.name}</h2>
+                </div>
+            `;
+
+                        const response = await fetch(
+                            "http://localhost:3000/cards",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization: `Bearer ${token}`,
+                                },
+                                body: JSON.stringify({
+                                    nom: selectedPerso.name,
+                                    img: selectedPerso.image,
+                                    maison: selectedPerso.house,
+                                    userId: data_user.id,
+                                }),
+                            }
+                        );
+                        const data_carte = await response.json();
+                        console.log(data_carte); // Vérifiez la réponse de la requête POST
+                    }
+                }
+            }
+
+            /*--------------------------------------------------------------------------------------------------------------------*/
+
+            document.addEventListener("DOMContentLoaded", async () => {
+                const token = localStorage.getItem("token");
+                const deco = document.getElementById("deconnection");
+                const supp = document.getElementById("supprimer");
+
+                if (!token) {
+                    window.location.href = "./signIn.html";
+                }
+
+                const response = await fetch(
+                    "http://localhost:3000/getMyProfil",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("token");
+                    window.location.href = "./connexion.html";
+                }
+
+                const data = await response.json();
+
+                document.getElementById(
+                    "email"
+                ).innerHTML = `Email : ${data.email}`;
+                document.getElementById(
+                    "name"
+                ).innerHTML = `Nom : ${data.name}`;
+                document.getElementById("ff").innerHTML = `Maison : ${data.id}`;
+
+                let carte_user = await fetch(
+                    `http://localhost:3000/cards/${data.id}`
+                );
+                carte_user = await carte_user.json();
+
+                carte_user.forEach((carte) => {
+                    document.getElementById("carte_utilisateur").innerHTML += `
+
+                    <p>titre : ${carte.nom}</p>
+                    <i class="fas fa-heart"></i>
+
+                `;
+                });
+
+                /*-----------------------------------------------------------------------------------------------*/
+
+                document.getElementById("house").innerHTML =
+                    carte_user.length != 0
+                        ? `Nombre de carte : ${carte_user.length}`
+                        : "Aucune carte débloquée";
+
+                let Gryffindor = document.getElementById("Gryffindor");
+                let Hufflepuff = document.getElementById("Hufflepuff");
+                let Ravenclaw = document.getElementById("Ravenclaw");
+                let Slytherin = document.getElementById("Slytherin");
+                let no_house = document.getElementById("no-house");
+
+                let template = document.getElementById("carte-template");
+
+                Gryffindor.innerHTML = "";
+                Hufflepuff.innerHTML = "";
+                Ravenclaw.innerHTML = "";
+                Slytherin.innerHTML = "";
+                no_house.innerHTML = "";
+
+                Gryffindor.appendChild(template);
+                Hufflepuff.appendChild(template);
+                Ravenclaw.appendChild(template);
+                Slytherin.appendChild(template);
+                no_house.appendChild(template);
+
+                carte_user.forEach((carte) => {
+                    console.log(carte);
+                    const carteCard = template.cloneNode(true);
+
+                    carteCard.style.display = "block";
+                    carteCard.querySelector(
+                        ".carte-nom"
+                    ).textContent = `Nom : ${carte.name}`;
+
+                    carteCard.querySelector(
+                        ".carte-maison"
+                    ).textContent = `Maison : ${carte.house}`;
+
+                    carteCard.querySelector(
+                        ".carte-acteur"
+                    ).textContent = `Acteur : ${carte.actor}`;
+
+                    carteCard.querySelector(".carte-img").src = carte.img;
+
+                    carteCard.querySelector(
+                        ".carte-details-link"
+                    ).href = `detail.html?slug=${carte.slug}`;
+
+                    if (carte.house) {
+                        carteCard.classList.add(carte.house);
+                        switch (carte.house) {
+                            case "Gryffindor":
+                                Gryffindor.appendChild(carteCard);
+                                Gryffindor.style.display = "flex";
+                                break;
+                            case "Hufflepuff":
+                                Hufflepuff.appendChild(carteCard);
+                                Hufflepuff.style.display = "flex";
+                                break;
+                            case "Ravenclaw":
+                                Ravenclaw.appendChild(carteCard);
+                                Ravenclaw.style.display = "flex";
+                                break;
+                            case "Slytherin":
+                                Slytherin.appendChild(carteCard);
+                                Slytherin.style.display = "flex";
+                                break;
+                        }
+                    } else {
+                        carteCard.classList.add("no-house");
+                        no_house.appendChild(carteCard);
+                        no_house.style.display = "flex";
+                    }
+                });
+
+                supp.addEventListener("click", async () => {
+                    localStorage.removeItem("token");
+                    const response = await fetch(
+                        "http://localhost:3000/getMyProfile",
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+
+                    const user = await response.json();
+
+                    let carte_user = await fetch(
+                        `http://localhost:3000/cards/${user.id}`
+                    );
+                    carte_user = await carte_user.json();
+
+                    for (const carte of carte_user) {
+                        await fetch(
+                            `http://localhost:3000/remove_card/${user.id}/${carte.id}`,
+                            {
+                                method: "PUT",
+                            }
+                        );
+                    }
+
+                    await fetch(`http://localhost:3000/users/${user.id}`, {
+                        method: "DELETE",
+                    });
+                    window.location.href = "./signIn.html";
+                });
+
+                deco.addEventListener("click", () => {
+                    localStorage.removeItem("token");
+                    window.location.href = "./signIn.html";
+                });
+            });
+        </script>
+    </body>
+</html>

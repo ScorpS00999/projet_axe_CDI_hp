@@ -43,6 +43,7 @@ header {
 #characters__index a {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 .img_perso_index {
@@ -81,7 +82,7 @@ header {
 }
 
 #characters_maison a {
-    margin: 3%;
+    margin: 1%;
     display: flex;
     justify-content: center;
 }
@@ -102,18 +103,18 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 600px;
-    width: 400px;
+    height: 570px;
+    width: 390px;
     background-color: white;
     border-radius: 30px;
-    margin-top: 10%;
-    padding: 4%;
-    padding-top: 4%;
+    margin-top: 3%;
+    padding: 30px;
 }
 
 .carte_characters:hover {
     outline: solid 2px red;
     transform: scale(1.06);
+    transition: transform 0.3s;
 }
 
 .carte_characters img {
@@ -225,4 +226,24 @@ button {
     top: 30vh;
     background-color: chartreuse;
     left: 50%;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+
+/*Coeur favori*/
+
+.favorite {
+    width: 50px;
+    height: 50px;
+    background-color: white; /* Blanc par défaut */
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    outline: none; /* Supprimer la bordure lorsque le bouton est cliqué */
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.favorite.clicked {
+    background-color: red; /* Rouge lorsqu'il est cliqué */
+    transition: all 0.5s;
 }

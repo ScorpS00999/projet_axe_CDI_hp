@@ -7,27 +7,36 @@
         <title>HP</title>
         <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
     </head>
-    <body>
+    <body class="inscription_connexion">
         <nav>
             <a href="index.html">Menu</a>
             <a href="filtre_hp.html">Filtre</a>
             <a href="inscription.html">Inscription</a>
-            <a href="connexion.html">Connexion</a>
         </nav>
 
         <div class="login-form">
-            <h2>Connexion</h2>
             <form
                 action="utilisateur.html"
                 method="POST"
                 id="formulaire"
                 name="connexion"
             >
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required />
+                <h2>Connexion</h2>
 
-                <label for="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" required />
+                <div class="mise_en_page_formulaire">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+
+                <div class="mise_en_page_formulaire">
+                    <label for="password">Mot de passe:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    />
+                </div>
 
                 <input type="submit" value="Se connecter" />
             </form>

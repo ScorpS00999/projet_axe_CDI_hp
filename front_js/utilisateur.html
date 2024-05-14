@@ -20,6 +20,9 @@
             Dans le formulaire précédent, vous avez fourni les informations
             suivantes :
         </p>
+        <button class="icon-button" id="heartButton">
+            <i class="fas fa-heart" style="font-size: 30px"></i>
+        </button>
 
         <main class="info-container">
             <div class="profile-container">
@@ -54,6 +57,17 @@
         </div>
 
         <script>
+            // Sélectionner le bouton
+            const heartButton = document.getElementById("heartButton");
+
+            // Ajouter un écouteur d'événements pour le clic
+            heartButton.addEventListener("click", function () {
+                // Ajouter ou supprimer la classe "clicked" pour changer la couleur de l'icône
+                this.classList.toggle("clicked");
+            });
+
+            /*-------------------------------------------------------------------------------------------------------------------------*/
+
             function fetchPerso() {
                 return fetch("https://hp-api.lainocs.fr/characters").then(
                     (response) => response.json()

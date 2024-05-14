@@ -29,6 +29,8 @@ nav {
 header {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     padding: 2%;
 }
 
@@ -48,6 +50,7 @@ header {
 
 .img_perso_index {
     height: 60vh;
+    max-width: 100%;
 }
 
 /*Style de la page perso_hp*/
@@ -94,6 +97,8 @@ header {
     padding-top: 2%;
 }
 
+/*------------------------------------------------------------------------*/
+
 /*Style des cartes*/
 
 .carte_characters {
@@ -103,7 +108,7 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 570px;
+    height: 550px;
     width: 390px;
     background-color: white;
     border-radius: 30px;
@@ -111,11 +116,99 @@ header {
     padding: 30px;
 }
 
+.carte_charactersGryffindor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    height: 550px;
+    width: 390px;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 3%;
+    padding: 30px;
+}
+
+.carte_charactersSlytherin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    height: 550px;
+    width: 390px;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 3%;
+    padding: 30px;
+}
+
+.carte_charactersRavenclaw {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    height: 550px;
+    width: 390px;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 3%;
+    padding: 30px;
+}
+
+.carte_charactersHufflepuff {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    height: 550px;
+    width: 390px;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 3%;
+    padding: 30px;
+}
+
+/*------------------------------------------------------------------------------*/
+
 .carte_characters:hover {
-    outline: solid 2px red;
-    transform: scale(1.06);
+    outline: solid 2px rgb(100, 100, 100);
+    transform: scale(1.07);
     transition: transform 0.3s;
 }
+
+.carte_charactersGryffindor:hover {
+    outline: solid 2px red;
+    transform: scale(1.07);
+    transition: transform 0.3s;
+}
+
+.carte_charactersSlytherin:hover {
+    outline: solid 2px rgb(0, 185, 31);
+    transform: scale(1.07);
+    transition: transform 0.3s;
+}
+
+.carte_charactersRavenclaw:hover {
+    outline: solid 2px rgb(0, 26, 255);
+    transform: scale(1.07);
+    transition: transform 0.3s;
+}
+
+.carte_charactersHufflepuff:hover {
+    outline: solid 2px rgb(252, 237, 22);
+    transform: scale(1.07);
+    transition: transform 0.3s;
+}
+
+/*----------------------------------------*/
 
 .carte_characters img {
     max-width: 90%;
@@ -155,6 +248,17 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    border: solid 3px;
+    padding: 2%;
+    border-radius: 15px;
+    backdrop-filter: blur(8px); /* Appliquer un flou */
+}
+
+.mise_en_page_formulaire {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 7%;
 }
 
 /*Responsive*/
@@ -225,7 +329,7 @@ button {
     justify-content: center;
     top: 30vh;
     background-color: chartreuse;
-    left: 50%;
+    left: 45.5%;
 }
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
@@ -246,4 +350,77 @@ button {
 .favorite.clicked {
     background-color: red; /* Rouge lorsqu'il est cliqué */
     transition: all 0.5s;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------*/
+
+/* Style pour le bouton */
+.icon-button {
+    display: flex; /* Utiliser flexbox pour centrer l'icône */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    width: 31px; /* Largeur du bouton */
+    height: 31px; /* Hauteur du bouton */
+    border-radius: 50%; /* Bordure arrondie pour créer un bouton rond */
+    background-color: transparent; /* Fond transparent */
+    border: none; /* Supprimer la bordure */
+    cursor: pointer; /* Curseur de souris pointer */
+    outline: none; /* Supprimer l'outline */
+}
+
+/* Style pour l'icône par défaut */
+.icon-button .fas.fa-heart {
+    color: black; /* Couleur par défaut */
+    transition: all 0.3s;
+}
+
+/* Style pour l'icône lorsqu'elle est activée */
+.icon-button.clicked .fas.fa-heart {
+    color: red; /* Couleur lorsque le bouton est cliqué */
+    transition: all 0.3s;
+}
+
+/*--------------------------------------------------------------------------------------------*/
+/* Recherche */
+
+#rechercheDynamique {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#searchInput {
+    width: 100%; /* Prend toute la largeur disponible */
+    padding: 8px; /* Ajoute un espacement intérieur */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+    border: 1px solid #ccc; /* Bordure de la barre de recherche */
+    border-radius: 4px; /* Bordure arrondie */
+    font-size: 16px; /* Taille de la police */
+}
+
+#searchInput:hover {
+    outline: solid 2px rgb(153, 0, 255);
+}
+
+#searchResults {
+    list-style: none;
+}
+
+/*--------------------------------------------------------------------------------------*/
+
+.img_hp_nav {
+    max-height: 30%;
+    max-width: 30%;
+}
+
+.inscription_connexion {
+    max-width: 100vw;
+    background-color: rgb(252, 243, 231);
+    /* height: 100vh; !! ne jamais gerer la hauteur seulment la largeur
+    max-width: 100vw;*/
+
+    background-image: url(../img/1366_2000.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }

@@ -16,29 +16,39 @@
         </nav>
 
         <header>
-            <h1>Tous les personnages</h1>
+            <img
+                src="img/Harry_Potter_wordmark.png"
+                alt=""
+                class="img_hp_nav"
+            />
 
             <div id="rechercheDynamique">
-                <input type="text" id="searchInput" placeholder="Search..." />
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Rechercher..."
+                />
                 <ul id="searchResults"></ul>
             </div>
 
             <button id="favoriteButton" class="favorite"></button>
         </header>
 
-        <div id="characters__index"></div>
+        <main>
+            <div id="characters__index"></div>
 
-        <div id="b">
-            <button onclick="PopUp()">Test</button>
-        </div>
+            <div id="b">
+                <button onclick="PopUp()">Test</button>
+            </div>
 
-        <div id="popUp">
-            <h4>Ouiiiiiiii</h4>
-            <p>ouiiiiiii</p>
-            <label for="perso">Choisi une carte:</label>
-            <select name="perso" id="PersoPop"></select>
-            <p onclick="fermer()">Close</p>
-        </div>
+            <div id="popUp">
+                <h4>Ouiiiiiiii</h4>
+                <p>ouiiiiiii</p>
+                <label for="perso">Choisi une carte:</label>
+                <select name="perso" id="PersoPop"></select>
+                <p onclick="fermer()">Close</p>
+            </div>
+        </main>
 
         <script>
             //La fonction fetch permet de récupérer tous les personnages présents dans l'api donner grâce au lien et de le rendre en .json
@@ -55,7 +65,7 @@
                 data.forEach((characters) => {
                     document.getElementById("characters__index").innerHTML += `
 
-                    <div class="carte_characters">
+                    <div class="carte_characters${characters.house}">
                         <a href="perso_hp.html?slug=${characters.slug}">
                         <img src="${characters.image}" alt="${characters.name}" class="img_perso_index">
                         <h2 id="carte_nom">${characters.name}</h2>

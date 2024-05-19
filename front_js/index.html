@@ -9,7 +9,6 @@
     </head>
     <body>
         <nav>
-            <a href="filtre_hp.html">Filtre</a>
             <a href="inscription.html">Inscription</a>
             <a href="connexion.html">Connexion</a>
             <a href="utilisateur.html">Profil</a>
@@ -30,11 +29,25 @@
                 />
                 <ul id="searchResults"></ul>
             </div>
-
-            <button id="favoriteButton" class="favorite"></button>
         </header>
 
         <main>
+            <div id="maison_select">
+                <label for="house-select">Choisir une maison:</label>
+
+                <select name="house" id="house-select">
+                    <option value="all">--Choisissez une option--</option>
+                    <option value="Gryffindor">Gryffindor</option>
+                    <option value="Ravenclaw">Ravenclaw</option>
+                    <option value="Slytherin">Slytherin</option>
+                    <option value="Hufflepuff">Hufflepuff</option>
+                    <option value="">Sans maison</option>
+                </select>
+
+                <input type="submit" value="Valider" id="valider" />
+                <button id="reset">Reset</button>
+            </div>
+
             <div id="characters__index"></div>
 
             <div id="b">
@@ -42,10 +55,13 @@
             </div>
 
             <div id="popUp">
-                <h4>Ouiiiiiiii</h4>
-                <p>ouiiiiiii</p>
+                <label for="cartesUtilisateurs">Choisi une carte:</label>
+                <select name="cartesUtilisateurs" id="CartePop"></select>
+
                 <label for="perso">Choisi une carte:</label>
                 <select name="perso" id="PersoPop"></select>
+
+                <button id="valider">Echanger</button>
                 <p onclick="fermer()">Close</p>
             </div>
         </main>
@@ -61,15 +77,16 @@
             //async et await permet d'attendre la réponse de la fonction fetch
             //Fonction qui affiche tous les personnages présent dans la "liste" renvoyer par la fonction fetch
             async function displayCharaters() {
+                document.getElementById("characters__index").innerHTML = "";
                 const data = await fetchPerso();
                 data.forEach((characters) => {
                     document.getElementById("characters__index").innerHTML += `
 
                     <div class="carte_characters${characters.house}">
                         <a href="perso_hp.html?slug=${characters.slug}">
-                        <img src="${characters.image}" alt="${characters.name}" class="img_perso_index">
-                        <h2 id="carte_nom">${characters.name}</h2>
-                    </a>
+                            <img src="${characters.image}" alt="${characters.name}" class="img_perso_index">
+                            <h2 id="carte_nom">${characters.name}</h2>
+                        </a>
                     </div>
 
                 `;
@@ -80,7 +97,11 @@
 
             function PopUp() {
                 document.getElementById("popUp").style.display = "flex";
+                CartesPersoUtilisateurPopUp();
                 PersoPopUp();
+
+                let echanger = document.getElementById("valider");
+                echanger.addEventListener("click", Echanger);
             }
 
             function fermer() {
@@ -95,6 +116,82 @@
                     <option value="${characters.slug}">${characters.name}</option>
                 `;
                 });
+            }
+
+            async function CartesPersoUtilisateurPopUp() {
+                const token = localStorage.getItem("token");
+
+                const response = await fetch(
+                    "http://localhost:3000/getMyProfil",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                const data = await response.json();
+
+                let carte_user = await fetch(
+                    `http://localhost:3000/cards/${data.id}`
+                );
+                carte_user = await carte_user.json();
+
+                carte_user.forEach((carte) => {
+                    console.log(carte.nom);
+                    document.getElementById("CartePop").innerHTML += `
+                    <option value="${carte.id}">${carte.nom}</option>
+                `;
+                });
+            }
+
+            async function Echanger() {
+                let carte_uti = document.getElementById("CartePop").value;
+                let carte_choisi = document.getElementById("PersoPop").value;
+
+                const token = localStorage.getItem("token");
+
+                const response_user = await fetch(
+                    "http://localhost:3000/getMyProfil",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                const data_user = await response_user.json();
+
+                const data = await fetchPerso();
+
+                const selectedPerso = data.find(
+                    (perso) => perso.slug === carte_choisi
+                );
+
+                const response = await fetch("http://localhost:3000/cards", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        nom: selectedPerso.name,
+                        img: selectedPerso.image,
+                        maison: selectedPerso.house,
+                        userId: data_user.id,
+                    }),
+                });
+                const data_carte = await response.json();
+
+                const delete_carte = await fetch(
+                    `http://localhost:3000/cards/${carte_uti}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
             }
 
             //------------------------------------------------------------------------------------------------------------------------
@@ -142,16 +239,69 @@
 
             //----------------------------------------------------------------------------------------------------------------------------------------
 
-            document.addEventListener("DOMContentLoaded", function () {
-                const favoriteButton =
-                    document.getElementById("favoriteButton");
+            //----------------------------------------------------------------------------------------------------------------------------------------
 
-                favoriteButton.addEventListener("click", function () {
-                    favoriteButton.classList.toggle("clicked"); // Toggle la classe 'clicked'
-                });
+            document.addEventListener("DOMContentLoaded", async () => {
+                const token = localStorage.getItem("token");
+
+                if (!token) {
+                    window.location.href = "./connexion.html";
+                }
+
+                const response = await fetch(
+                    "http://localhost:3000/getMyProfil",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("token");
+                    window.location.href = "./connexion.html";
+                }
             });
 
-            //----------------------------------------------------------------------------------------------------------------------------------------
+            //--------------------------Filtre-----------------------------------------------------------------------------------------------------------
+            let valider = document.querySelector("#valider");
+            let reset = document.getElementById("reset");
+
+            //Afficher les personnages en fonction de leurs maisons
+            async function displayCharatersHouse() {
+                let maison = document.getElementById("house-select").value;
+
+                //Mettre la div à "zéro"
+                document.getElementById("characters__index").innerHTML = "";
+                let carte = document.getElementsByClassName("carte_characters");
+
+                const data = await fetchPerso();
+                data.forEach((characters) => {
+                    //Vérifier la maison de chaque personnages
+                    if (characters.house == maison) {
+                        //Afficher tous les personnages avec la maisons correspondante
+                        document.getElementById(
+                            "characters__index"
+                        ).innerHTML += `
+
+                    <div class="carte_characters${characters.house}">
+                        <a href="perso_hp.html?slug=${characters.slug}">
+                            <img src="${characters.image}" alt="${characters.name}" class="img_perso_index">
+                            <h2 id="carte_nom">${characters.name}</h2>
+                        </a>
+                    </div>
+                    `;
+                    }
+                });
+
+                if (maison == "all") {
+                    displayCharaters();
+                }
+            }
+
+            displayCharaters();
+            reset.addEventListener("click", displayCharaters);
+            valider.addEventListener("click", displayCharatersHouse);
         </script>
     </body>
 </html>

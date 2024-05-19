@@ -31,14 +31,14 @@ class CardsController {
         try {
             const id = parseInt(req.params.id);
             //const user = users.find((element) => element.id === parseInt(id));
-            const cards = await prisma.post.findUnique({ where: { id: id } });
-            if (cards === null) {
+            const carte = await prisma.cartes.findUnique({ where: { id: id } });
+            if (carte === null) {
                 return res.status(404).send("User not found");
             }
-            await prisma.post.delete({ where: { id: id } });
+            await prisma.cartes.delete({ where: { id: id } });
 
-            const card = await prisma.post.findMany();
-            return res.status(200).send(card);
+            const cartes = await prisma.cartes.findMany();
+            return res.status(200).send(cartes);
         } catch (e) {
             return res.status(500).send({ message: e.message });
         }

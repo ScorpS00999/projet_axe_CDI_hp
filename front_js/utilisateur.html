@@ -57,12 +57,12 @@
 
             function update_chrono() {
                 ms += 1;
-                if (ms == 60) {
+                if (ms == 1440) {
                     peutBooster = true;
                 }
             }
 
-            setInterval(update_chrono, 1000);
+            setInterval(update_chrono, 60000);
 
             /*----------------------------------------------------------------------------------------------------------------------*/
 

@@ -4,51 +4,46 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/style.css" />
-        <title>Personnage</title>
+        <title>HP</title>
         <link rel="icon" href="img/HP_-_Harry_Potter_wordmark.svg.png" />
-
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-            integrity="..."
+            integrity="sha384-..."
             crossorigin="anonymous"
         />
     </head>
     <body>
-        <h2>Bonjour,</h2>
-        <p>
-            Dans le formulaire précédent, vous avez fourni les informations
-            suivantes :
-        </p>
-        <button class="icon-button heartButton">
-            <i class="fas fa-heart" style="font-size: 30px"></i>
-        </button>
-
+        <header>
+            <a href="index.html" id="hearder_uti">
+                <img
+                    src="img/Harry_Potter_wordmark.png"
+                    alt="Harry Potter"
+                    class="img_hp_nav"
+                />
+            </a>
+        </header>
         <main class="info-container">
-            <div class="profile-container">
-                <h3>Profil de l'utilisateur</h3>
-
-                <i class="fas fa-heart" style="font-size: 30px; color: red"></i>
-
+            <div id="profile-container">
+                <h1>Profil de l'utilisateur</h1>
                 <form class="form-group">
                     <div>
-                        <p type="text" id="name" name="name">ju</p>
+                        <h3 id="name">name</h3>
                     </div>
                     <div>
-                        <p type="email" id="email" name="email">n</p>
+                        <h3 id="email">email</h3>
                     </div>
                     <p id="ff"></p>
                     <p id="house"></p>
                 </form>
             </div>
-
             <div id="carte_utilisateur"></div>
         </main>
 
         <a href="index.html" id="bouton_retour">Retour</a>
 
         <div id="booster">
-            <button onclick="PopUp()">Test</button>
+            <button id="btn_PopUp" onclick="PopUp()">Booster</button>
         </div>
 
         <div id="popUpBooster">
@@ -71,15 +66,11 @@
 
             /*----------------------------------------------------------------------------------------------------------------------*/
 
-            // Sélectionner le bouton
             document.addEventListener("DOMContentLoaded", function () {
-                // Sélectionner tous les boutons avec la classe "heartButton"
                 const heartButtons = document.querySelectorAll(".heartButton");
 
-                // Ajouter un écouteur d'événements pour chaque bouton
                 heartButtons.forEach((button) => {
                     button.addEventListener("click", function () {
-                        // Ajouter ou supprimer la classe "clicked" pour changer la couleur de l'icône
                         this.classList.toggle("clicked");
                     });
                 });
@@ -98,7 +89,7 @@
                         "flex";
                     CartesBooster();
                     peutBooster = false;
-                    setInterval(update_chrono, 1000);
+                    ms = 0;
                 }
             }
 
@@ -107,6 +98,8 @@
             }
 
             async function CartesBooster() {
+                document.getElementById("carteBooster").innerHTML = ``;
+
                 const token = localStorage.getItem("token");
                 const response_user = await fetch(
                     "http://localhost:3000/getMyProfil",
@@ -137,11 +130,11 @@
                     );
                     if (selectedPerso) {
                         document.getElementById("carteBooster").innerHTML += `
-                        <div class="carte_characters">
-                            <img src="${selectedPerso.image}" alt="${selectedPerso.name}" class="img_perso_menu">
-                            <h2 id="carte_nom">${selectedPerso.name}</h2>
-                        </div>
-            `;
+                    <div class="carte_booster">
+                        <img src="${selectedPerso.image}" alt="${selectedPerso.name}" class="img_booster">
+                        <h4 class="nom_booster">${selectedPerso.name}</h4>
+                    </div>
+                    `;
 
                         const response = await fetch(
                             "http://localhost:3000/cards",
@@ -160,16 +153,14 @@
                             }
                         );
                         const data_carte = await response.json();
-                        console.log(data_carte); // Vérifiez la réponse de la requête POST
+                        console.log(data_carte);
                     }
                 }
+                AfficherPersonnages();
             }
 
-            /*--------------------------------------------------------------------------------------------------------------------*/
-
-            /*---------------a trier-----------------------------*/
-
-            document.addEventListener("DOMContentLoaded", async () => {
+            async function AfficherPersonnages() {
+                document.getElementById("carte_utilisateur").innerHTML = ``;
                 const token = localStorage.getItem("token");
 
                 if (!token) {
@@ -198,7 +189,6 @@
                 document.getElementById(
                     "name"
                 ).innerHTML = `Nom : ${data.name}`;
-                document.getElementById("ff").innerHTML = `Maison : ${data.id}`;
 
                 let carte_user = await fetch(
                     `http://localhost:3000/cards/${data.id}`
@@ -207,12 +197,15 @@
 
                 carte_user.forEach((carte) => {
                     document.getElementById("carte_utilisateur").innerHTML += `
-
-                    <p>titre : ${carte.nom}</p>
-                    <button class="icon-button heartButton">
-                        <i class="fas fa-heart" style="font-size: 20px"></i>
-                    </button>
-
+                <div class="cartes_utilisateur">
+                    <img src="${carte.img}" alt="${carte.nom}" class="img_carte_uti">
+                    <div class="nom_coeur_uti">
+                        <h2 class="carte_nom_uti">${carte.nom}</h2>
+                        <button class="icon-button heartButton">
+                            <i class="fas fa-heart" style="font-size: 20px"></i>
+                        </button>
+                    </div>
+                </div>
                 `;
                 });
 
@@ -223,10 +216,9 @@
                         this.classList.toggle("clicked");
                     });
                 });
-            });
+            }
 
-            /*-----------------------------------------------------------------------------------------------*/
-            /*---------------a trier-----------------------------*/
+            AfficherPersonnages();
         </script>
     </body>
 </html>

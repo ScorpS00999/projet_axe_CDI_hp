@@ -9,8 +9,6 @@
     </head>
     <body>
         <nav>
-            <a href="inscription.html">Inscription</a>
-            <a href="connexion.html">Connexion</a>
             <a href="utilisateur.html">Profil</a>
         </nav>
 
@@ -36,7 +34,7 @@
                 <label for="house-select">Choisir une maison:</label>
 
                 <select name="house" id="house-select">
-                    <option value="all">--Choisissez une option--</option>
+                    <option value="all">--Choisissez une maison--</option>
                     <option value="Gryffindor">Gryffindor</option>
                     <option value="Ravenclaw">Ravenclaw</option>
                     <option value="Slytherin">Slytherin</option>
@@ -44,24 +42,28 @@
                     <option value="">Sans maison</option>
                 </select>
 
-                <input type="submit" value="Valider" id="valider" />
-                <button id="reset">Reset</button>
+                <div id="btn_filtre">
+                    <input type="submit" value="Valider" id="valider_filtre" />
+                    <input type="submit" value="Reset" id="reset" />
+                </div>
             </div>
 
             <div id="characters__index"></div>
 
             <div id="b">
-                <button onclick="PopUp()">Test</button>
+                <button id="btn_PopUp" onclick="PopUp()">Echange</button>
             </div>
 
             <div id="popUp">
-                <label for="cartesUtilisateurs">Choisi une carte:</label>
+                <label for="CartePop">Choisissez une de vos cartes :</label>
                 <select name="cartesUtilisateurs" id="CartePop"></select>
 
-                <label for="perso">Choisi une carte:</label>
+                <label for="PersoPop">Choisir une carte:</label>
                 <select name="perso" id="PersoPop"></select>
 
                 <button id="valider">Echanger</button>
+
+                <p id="echange_valider">Echange réussi</p>
                 <p onclick="fermer()">Close</p>
             </div>
         </main>
@@ -77,7 +79,7 @@
             //async et await permet d'attendre la réponse de la fonction fetch
             //Fonction qui affiche tous les personnages présent dans la "liste" renvoyer par la fonction fetch
             async function displayCharaters() {
-                document.getElementById("characters__index").innerHTML = "";
+                document.getElementById("characters__index").innerHTML = ``;
                 const data = await fetchPerso();
                 data.forEach((characters) => {
                     document.getElementById("characters__index").innerHTML += `
@@ -93,8 +95,6 @@
                 });
             }
 
-            displayCharaters();
-
             function PopUp() {
                 document.getElementById("popUp").style.display = "flex";
                 CartesPersoUtilisateurPopUp();
@@ -105,6 +105,8 @@
             }
 
             function fermer() {
+                document.getElementById("echange_valider").style.display =
+                    "none";
                 document.getElementById("popUp").style.display = "none";
             }
 
@@ -138,7 +140,6 @@
                 carte_user = await carte_user.json();
 
                 carte_user.forEach((carte) => {
-                    console.log(carte.nom);
                     document.getElementById("CartePop").innerHTML += `
                     <option value="${carte.id}">${carte.nom}</option>
                 `;
@@ -192,6 +193,9 @@
                         },
                     }
                 );
+
+                document.getElementById("echange_valider").style.display =
+                    "flex";
             }
 
             //------------------------------------------------------------------------------------------------------------------------
@@ -264,7 +268,7 @@
             });
 
             //--------------------------Filtre-----------------------------------------------------------------------------------------------------------
-            let valider = document.querySelector("#valider");
+            let valider = document.getElementById("valider_filtre");
             let reset = document.getElementById("reset");
 
             //Afficher les personnages en fonction de leurs maisons
@@ -272,7 +276,7 @@
                 let maison = document.getElementById("house-select").value;
 
                 //Mettre la div à "zéro"
-                document.getElementById("characters__index").innerHTML = "";
+                document.getElementById("characters__index").innerHTML = ``;
                 let carte = document.getElementsByClassName("carte_characters");
 
                 const data = await fetchPerso();

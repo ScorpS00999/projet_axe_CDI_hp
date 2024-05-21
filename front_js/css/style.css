@@ -6,7 +6,7 @@
 
 body {
     max-width: 100vw;
-    background-color: rgb(219, 251, 255);
+    background-color: rgb(192, 192, 192);
     /* height: 100vh; !! ne jamais gerer la hauteur seulment la largeur*/
 
     /*background-image: url(../img/94-948588_light-color-curves-wallpaper-hd-wallpapers-light-color.jpg);
@@ -40,6 +40,7 @@ header {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    align-content: center;
 }
 
 #characters__index a {
@@ -92,9 +93,15 @@ header {
 
 #maison_select {
     display: flex;
+    flex-direction: column;
+    justify-content: start;
+    max-width: 11.5%;
+    padding-left: 2%;
+}
+
+#btn_filtre {
+    display: flex;
     flex-direction: row;
-    justify-content: center;
-    padding-top: 2%;
 }
 
 /*------------------------------------------------------------------------*/
@@ -108,14 +115,16 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 550px;
+    height: 570px;
     width: 390px;
-    background-color: white;
+    background-color: #decba4;
     border-radius: 30px;
     margin-top: 3%;
     padding: 30px;
 
-    background-image: url(../img/OIP.jpg);
+    transition: transform 0.3s;
+
+    background-image: url(../img/papier-peint-harry-potter-la-carte-du-maraudeur-1005-x-52cm~5011583456615_01c_FR_CF.avif);
     background-repeat: no-repeat;
     background-size: cover;
     max-width: 100vw;
@@ -128,17 +137,19 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 550px;
+    height: 570px;
     width: 390px;
     background-color: #decba4;
     border-radius: 30px;
     margin-top: 3%;
     padding: 30px;
 
-    /*background-image: url(../img/images_02bd7ac0341e.webp);
+    transition: transform 0.3s;
+
+    background-image: url(../img/papier-peint-harry-potter-la-carte-du-maraudeur-1005-x-52cm~5011583456615_01c_FR_CF.avif);
     background-repeat: no-repeat;
     background-size: cover;
-    max-width: 100vw;*/
+    max-width: 100vw;
 }
 
 .carte_charactersSlytherin {
@@ -148,17 +159,19 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 550px;
+    height: 570px;
     width: 390px;
     background-color: #decba4;
     border-radius: 30px;
     margin-top: 3%;
     padding: 30px;
 
-    /*background-image: url(../img/carte_derrier-removebg-preview.png);
+    transition: transform 0.3s;
+
+    background-image: url(../img/papier-peint-harry-potter-la-carte-du-maraudeur-1005-x-52cm~5011583456615_01c_FR_CF.avif);
     background-repeat: no-repeat;
     background-size: cover;
-    max-width: 100vw;*/
+    max-width: 100vw;
 }
 
 .carte_charactersRavenclaw {
@@ -168,12 +181,19 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 550px;
+    height: 570px;
     width: 390px;
-    background-color: white;
+    background-color: #decba4;
     border-radius: 30px;
     margin-top: 3%;
     padding: 30px;
+
+    transition: transform 0.3s;
+
+    background-image: url(../img/papier-peint-harry-potter-la-carte-du-maraudeur-1005-x-52cm~5011583456615_01c_FR_CF.avif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 100vw;
 }
 
 .carte_charactersHufflepuff {
@@ -183,12 +203,19 @@ header {
     text-align: center;
     align-items: center;
     color: black;
-    height: 550px;
+    height: 570px;
     width: 390px;
-    background-color: white;
+    background-color: #decba4;
     border-radius: 30px;
     margin-top: 3%;
     padding: 30px;
+
+    transition: transform 0.3s;
+
+    background-image: url(../img/papier-peint-harry-potter-la-carte-du-maraudeur-1005-x-52cm~5011583456615_01c_FR_CF.avif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 100vw;
 }
 
 /*------------------------------------------------------------------------------*/
@@ -234,7 +261,13 @@ header {
 }
 
 #carte_nom {
-    padding-top: 30px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 30px;
+    border-radius: 5px;
+    border: solid 1px;
 }
 
 /*Style du bouton retour*/
@@ -331,10 +364,11 @@ header {
     right: 10px;
 }
 
-button {
+#btn_PopUp {
     border-radius: 6.5px;
-    height: 5vh;
-    width: 8vw;
+    height: 5.5vh;
+    width: 7vw;
+    font-size: 125%;
 }
 
 #popUp {
@@ -342,9 +376,14 @@ button {
     display: none;
     flex-direction: column;
     justify-content: center;
-    top: 30vh;
-    background-color: chartreuse;
-    left: 45.5%;
+    top: 40vh;
+    background-color: #c7c7c7;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    padding: 1%;
+    border-radius: 5px;
+    border: solid 1px;
 }
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
@@ -438,4 +477,131 @@ button {
     background-image: url(../img/1366_2000.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#booster {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.cartes_utilisateur {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    height: 420px;
+    width: 280px;
+    background-color: #decba4;
+    border-radius: 30px;
+    margin-top: 3%;
+    padding: 20px;
+    border: solid 2px;
+}
+
+.img_carte_uti {
+    height: 75%;
+    max-width: 90%;
+    margin-top: 20px;
+}
+
+#carte_utilisateur {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+#popUpBooster {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    top: 30vh;
+    background-color: #c7c7c7;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 45%;
+    border: solid 2px;
+}
+
+#carteBooster {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    max-height: 90%;
+}
+
+.carte_booster {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    background-color: #decba4;
+    border-radius: 10px;
+    padding: 10px;
+    width: 15%;
+
+    background-image: url(../img/papier-peint-harry-potter-la-carte-du-maraudeur-1005-x-52cm~5011583456615_01c_FR_CF.avif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 100vw;
+}
+
+.img_booster {
+    height: 75%;
+    max-width: 90%;
+    margin-top: 20px;
+}
+
+.nom_booster {
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 4%;
+    border-radius: 5px;
+    border: solid 1px;
+}
+
+.carte_nom_uti {
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    padding: 13px;
+    margin: 15px;
+    border-radius: 5px;
+    border: solid 1px;
+}
+
+.nom_coeur_uti {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-bottom: 5px;
+}
+
+#erreur {
+    display: none;
+    color: red;
+}
+
+#profile-container {
+    padding-left: 1%;
+}
+
+#hearder_uti {
+    display: flex;
+    justify-content: center;
+}
+
+#echange_valider {
+    color: red;
+    display: none;
 }

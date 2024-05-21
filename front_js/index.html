@@ -208,28 +208,26 @@
                     const searchTerm = searchInput.value.trim().toLowerCase();
 
                     if (searchTerm === "") {
-                        searchResults.innerHTML = ""; // Clear previous results
-                        return; // Exit early if search term is empty
+                        searchResults.innerHTML = "";
+                        return;
                     }
 
-                    // Fetch data from API
                     fetch(
                         `https://hp-api.lainocs.fr/characters?q=${searchTerm}`
                     )
                         .then((response) => response.json())
                         .then((data) => {
-                            searchResults.innerHTML = ""; // Clear previous results
-                            // Display matching results
-                            data.forEach((character) => {
+                            searchResults.innerHTML = "";
+                            data.forEach((perso) => {
                                 if (
-                                    character.name
+                                    perso.name
                                         .toLowerCase()
                                         .includes(searchTerm)
                                 ) {
                                     const li = document.createElement("li");
                                     const a = document.createElement("a");
-                                    a.textContent = character.name; // Afficher uniquement le nom
-                                    a.href = `perso_hp.html?slug=${character.slug}`;
+                                    a.textContent = perso.name;
+                                    a.href = `perso_hp.html?slug=${perso.slug}`;
                                     li.appendChild(a);
                                     searchResults.appendChild(li);
                                 }

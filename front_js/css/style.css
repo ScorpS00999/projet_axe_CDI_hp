@@ -402,35 +402,32 @@ header {
 }
 
 .favorite.clicked {
-    background-color: red; /* Rouge lorsqu'il est cliqué */
+    background-color: red;
     transition: all 0.5s;
 }
 
 /*-------------------------------------------------------------------------------------------------------------------*/
 
-/* Style pour le bouton */
 .icon-button {
-    display: flex; /* Utiliser flexbox pour centrer l'icône */
-    justify-content: center; /* Centrer horizontalement */
-    align-items: center; /* Centrer verticalement */
-    width: 31px; /* Largeur du bouton */
-    height: 31px; /* Hauteur du bouton */
-    border-radius: 50%; /* Bordure arrondie pour créer un bouton rond */
-    background-color: transparent; /* Fond transparent */
-    border: none; /* Supprimer la bordure */
-    cursor: pointer; /* Curseur de souris pointer */
-    outline: none; /* Supprimer l'outline */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }
 
-/* Style pour l'icône par défaut */
 .icon-button .fas.fa-heart {
-    color: black; /* Couleur par défaut */
+    color: black;
     transition: all 0.3s;
 }
 
-/* Style pour l'icône lorsqu'elle est activée */
 .icon-button.clicked .fas.fa-heart {
-    color: red; /* Couleur lorsque le bouton est cliqué */
+    color: red;
     transition: all 0.3s;
 }
 
@@ -445,12 +442,12 @@ header {
 }
 
 #searchInput {
-    width: 100%; /* Prend toute la largeur disponible */
-    padding: 8px; /* Ajoute un espacement intérieur */
-    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
-    border: 1px solid #ccc; /* Bordure de la barre de recherche */
-    border-radius: 4px; /* Bordure arrondie */
-    font-size: 16px; /* Taille de la police */
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
 #searchInput:hover {
